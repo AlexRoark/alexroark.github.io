@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Murway</title>
+
+    <!--Style-->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/tinyswiper.css">
+
+    <!--JavaScript-->
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script>
+
+        function scrollgallery() {
+            console.log($(window).scrollTop());
+            $(".panelCon").css('bottom',$(window).scrollTop(1000)*-1);
+        };
+
+        var winHeight = $(window).innerHeight();
+        $(document).ready(function () {
+            $(".panel").height(winHeight);
+            $("body").height(winHeight*$(".panel").length);
+        });
+
+        window.addEventListener('resize', function (event) {
+            $(".panel").height($(window).innerHeight());
+        });
+        $(window).on('scroll',function(){
+            $(".panelCon").css('bottom',$(window).scrollTop()*-1);
+        });
+
+        $('.panelCon').on('mousewheel',function(e){
+            e.preventDefault();
+            $(window).scrollTop($(window).scrollTop() - e.originalEvent.deltaY);
+        });
+
+        (function ($) {
+            $(window).on('load', function () {
+                $.instagramFeed({
+                    'username': 'the.onemoon', //Имя пользователя
+                    'container': "#instafeed", //Контейнер для изображений
+                    'display_profile': false, //Отображение профиля
+                    'display_biography': false, //Отображение биографии
+                    'display_gallery': true, //Отображение галереи
+                    'styling': true, //Стандартные стили библиотеки
+                    'items': 8, //Количество изображений в галереи
+                    'items_per_row': 4, //Количество изображений в ряд
+                    'margin': 0.5 //Отступ между изображениями
+                });
+            });
+        })(jQuery);
+    </script>
+
+
+</head>
+<body>
+
+    <div class="panelCon">
+    <section class="gallery panel">
+    <div class="anc"></div>
+        <div id="instafeed"></div>
+    </section>
+
+    <section class="main panel">
+    <div class="swiper-container">
+        <div class="gallery-scroll">
+            <img onclick="scrollgallery();" id="gallery-up" src="assets/images/gallery-up.svg" alt="Скролл вверх">
+        </div>
+
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"> <a class="nav-link active" href="">Главная</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">Проекты</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">Маркет</a></li>
+                <li class="nav-item logotype"><img src="assets/images/logo.svg" alt=""></li>
+                <li class="nav-item"> <a class="nav-link" href="">Спасибо</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">События</a></li>
+                <li class="nav-item"> <a class="nav-link" href="">Контакты</a></li>
+            </ul>
+        </nav>
+
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img
+                     src="media/slider/slider1.jpg"
+                     />
+            </div>
+            <div class="swiper-slide">
+                <img
+                     src="media/slider/slider2.jpg"
+                     />
+            </div>
+            <div class="swiper-slide">
+                <img
+                     src="https://user-images.githubusercontent.com/10026019/102327273-74284900-3fc0-11eb-913a-69661b73ab5d.png"
+                     />
+            </div>
+            <div class="swiper-slide">
+                <img
+                     src="https://user-images.githubusercontent.com/10026019/102327264-712d5880-3fc0-11eb-8f07-7d58264938c1.png"
+                     />
+            </div>
+            <div class="swiper-slide">
+                <img
+                     src="https://user-images.githubusercontent.com/10026019/102327267-72f71c00-3fc0-11eb-8550-8845f38935a4.png"
+                     />
+            </div>
+            <div class="swiper-slide">
+                <img
+                     src="https://user-images.githubusercontent.com/10026019/102327260-6f639500-3fc0-11eb-85fa-cfaa45ce054c.png"
+                     />
+            </div>
+            <div class="swiper-slide">
+                <img
+                     src="https://user-images.githubusercontent.com/10026019/102327267-72f71c00-3fc0-11eb-8550-8845f38935a4.png"
+                     />
+            </div>
+        </div>
+        <button class="swiper-plugin-navigation-prevEl">
+        </button>
+        <button class="swiper-plugin-navigation-nextEl">
+        </button>
+    </div>
+    </section>
+    </div>
+
+    <!-- APP   -->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.instagramFeed.min.js"></script>
+
+    <!-- Tiny-Swiper JS -->
+    <script src="https://unpkg.com/tiny-swiper@latest/lib/index.min.js"></script>
+    <script src="https://unpkg.com/tiny-swiper@latest/lib/modules/navigation.min.js"></script>
+    <script src="https://unpkg.com/tiny-swiper@latest/lib/modules/keyboardControl.min.js"></script>
+
+    <!-- Initialize Tiny-Swiper -->
+    <script>
+        var swiper = new Swiper(".swiper-container", {
+            loop: true,
+            speed: 800,
+            mousewheel: {
+                invert: false,
+                interval: 400
+            },
+            navigation: {
+                prevEl: ".swiper-plugin-navigation-prevEl",
+                nextEl: ".swiper-plugin-navigation-nextEl"
+            },
+            keyboard: {
+                enabled: true
+            },
+            plugins: [SwiperPluginNavigation, SwiperPluginKeyboardControl]
+        });
+    </script>
+</body>
+</html>
