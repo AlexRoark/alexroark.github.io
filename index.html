@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/tinyswiper.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.0/photoswipe.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.0/default-skin/default-skin.css'>
 
     <!--JavaScript-->
     <script
@@ -16,55 +18,353 @@
             crossorigin="anonymous"></script>
     <script>
 
+//        function scrollgallery() {
+//            console.log($(window).scrollTop());
+//            $(".panelCon").css('bottom',$(window).scrollTop(1000)*-1);
+//        };
+//
+//        var winHeight = $(window).innerHeight();
+//        $(document).ready(function () {
+//            $(".panel").height(winHeight);
+//            $("body").height(winHeight*$(".panel").length);
+//        });
+//
+//        window.addEventListener('resize', function (event) {
+//            $(".panel").height($(window).innerHeight());
+//        });
+//        $(window).on('scroll',function(){
+//            $(".panelCon").css('bottom',$(window).scrollTop()*-1);
+//        });
+//
+//        $('.panelCon').on('mousewheel',function(e){
+//            e.preventDefault();
+//            $(window).scrollTop($(window).scrollTop() - e.originalEvent.deltaY);
+//        });
+
+        $(document).ready(function () {
+            var main = $('.main');
+            var y = main.offset().top;
+            $(window).scrollTop(y)+1;
+        });
+
+        $(window).on('scroll', function() {
+            var id  = $('.main'),
+                top = Math.round($(id).offset().top),
+                scrltop = $(window).scrollTop() + 70;
+            if (top < scrltop) {
+                $('.logotype').fadeTo(0, 0.5)
+                $('.logotype img').css({'transition' : 'all 0.5s ease', 'animation' : 'rotate 10s infinite alternate paused'})
+            } else {
+                $('.logotype').fadeTo(0, 1)
+                $('.logotype img').css({'transition' : 'all 0.5s ease', 'animation' : 'rotate 10s infinite alternate'})
+            }
+        });
+
         function scrollgallery() {
-            console.log($(window).scrollTop());
-            $(".panelCon").css('bottom',$(window).scrollTop(1000)*-1);
+                var id  = $('.gallery'),
+                    top = $(id).offset().top + id.outerHeight() - $(window).height();
+                $('body,html').animate({scrollTop: top}, 1500);
         };
 
-        var winHeight = $(window).innerHeight();
-        $(document).ready(function () {
-            $(".panel").height(winHeight);
-            $("body").height(winHeight*$(".panel").length);
-        });
+        function scrollhome() {
+            var id  = $('.main'),
+                top = $(id).offset().top;
+            $('body,html').animate({scrollTop: top}, 1500);
+        };
 
-        window.addEventListener('resize', function (event) {
-            $(".panel").height($(window).innerHeight());
-        });
-        $(window).on('scroll',function(){
-            $(".panelCon").css('bottom',$(window).scrollTop()*-1);
-        });
 
-        $('.panelCon').on('mousewheel',function(e){
-            e.preventDefault();
-            $(window).scrollTop($(window).scrollTop() - e.originalEvent.deltaY);
-        });
+        $(window).on('load', function() { // makes sure the whole site is loaded
+            $('#loader').fadeOut(); // will first fade out the loading animation
+            $('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+        })
 
-        (function ($) {
-            $(window).on('load', function () {
-                $.instagramFeed({
-                    'username': 'the.onemoon', //Имя пользователя
-                    'container': "#instafeed", //Контейнер для изображений
-                    'display_profile': false, //Отображение профиля
-                    'display_biography': false, //Отображение биографии
-                    'display_gallery': true, //Отображение галереи
-                    'styling': true, //Стандартные стили библиотеки
-                    'items': 8, //Количество изображений в галереи
-                    'items_per_row': 4, //Количество изображений в ряд
-                    'margin': 0.5 //Отступ между изображениями
-                });
-            });
-        })(jQuery);
+
     </script>
 
+
+    <style>
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999999999;
+        }
+        #loader {
+            display: block;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            width: 150px;
+            height: 150px;
+            margin: -75px 0 0 -75px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #9370DB;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+        #loader:before {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #BA55D3;
+            -webkit-animation: spin 3s linear infinite;
+            animation: spin 3s linear infinite;
+        }
+        #loader:after {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #FF00FF;
+            -webkit-animation: spin 1.5s linear infinite;
+            animation: spin 1.5s linear infinite;
+        }
+        @-webkit-keyframes spin {
+            0%   {
+                -webkit-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes spin {
+            0%   {
+                -webkit-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(360deg);
+                opacity: 1;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            20% {
+                opacity: 1;
+            }
+            30% {
+                opacity: 0.4;
+            }
+            40% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-7px);
+                opacity: 0.4;
+            }
+            60% {
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.4;
+            }
+            80% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.4;
+            }
+
+        }
+
+        @keyframes galleryup {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .pswp__caption__center {
+            text-align: center;
+        }
+
+        #gallery {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: space-around;
+            justify-content: center;
+            align-items: baseline;
+        }
+
+        figure {
+            margin: 0;
+            padding: 0;
+            opacity: 0.5;
+        }
+
+        figure:hover {
+            opacity: 1;
+            transition: opacity 0.1s ease-out .2s;
+        }
+    </style>
 
 </head>
 <body>
 
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
     <div class="panelCon">
     <section class="gallery panel">
-    <div class="anc"></div>
-        <div id="instafeed"></div>
+
+
+
+        <div id="gallery" class="gallery" itemscope itemtype="http://schema.org/ImageGallery">
+
+            <!-- Use figure for a more semantic html -->
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <!-- Link to the big image, not mandatory, but usefull when there is no JS -->
+                <a href="https://unsplash.it/1200/900/?image=702" data-caption="Sea side, south shore<br><em class='text-muted'>© Dominik Schröder</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <!-- Thumbnail -->
+                    <img src="https://unsplash.it/400/300/?image=702" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=695" data-caption="Sunset in the wheat field<br><em class='text-muted'>© Jordan McQueen</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=695" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=675" data-caption="Mysterious ocean<br><em class='text-muted'>© Barn Images</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=675" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=651" data-caption="Cloud over the mountains<br><em class='text-muted'>© James Pritchett</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=651" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=584" data-caption="Icelandic horses<br><em class='text-muted'>© Bethany Legg</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=584" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=574" data-caption="Sea side, south shore<br><em class='text-muted'>© Julien Lavallée</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=574" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=551" data-caption="Sunset on the highland road<br><em class='text-muted'>© Forrest Cavale</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=551" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=509" data-caption="Seljalandsfoss waterfall<br><em class='text-muted'>© Jeff Sheldon</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=509" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=511" data-caption="Fjadrarglufur canyon, south shore<br><em class='text-muted'>© Jeff Sheldon</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=511" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=515" data-caption="Eerie wreckage of a crashed U.S. Navy aircraft<br><em class='text-muted'>© Jeff Sheldon</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=515" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=512" data-caption="Blue Lagoon<br><em class='text-muted'>© Jeff Sheldon</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=512" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="https://unsplash.it/1200/900/?image=514" data-caption="Sunny Reykjavik street<br><em class='text-muted'>© Jeff Sheldon</em>" data-width="1200" data-height="900" itemprop="contentUrl">
+                    <img src="https://unsplash.it/400/300/?image=514" itemprop="thumbnail" alt="Image description">
+                </a>
+            </figure>
+    </div>
+
+
+
     </section>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe.
+It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides.
+PhotoSwipe keeps only 3 of them in the DOM to save memory.
+Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <section class="main panel">
     <div class="swiper-container">
@@ -77,7 +377,7 @@
                 <li class="nav-item"> <a class="nav-link active" href="">Главная</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Проекты</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Маркет</a></li>
-                <li class="nav-item logotype"><img src="assets/images/logo.svg" alt=""></li>
+                <li class="nav-item logotype"><img onclick="scrollhome();" src="assets/images/logo.svg" alt=""></li>
                 <li class="nav-item"> <a class="nav-link" href="">Спасибо</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">События</a></li>
                 <li class="nav-item"> <a class="nav-link" href="">Контакты</a></li>
@@ -87,17 +387,17 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img
+                     src="https://user-images.githubusercontent.com/10026019/102327273-74284900-3fc0-11eb-913a-69661b73ab5d.png"
+                     />
+            </div>
+            <div class="swiper-slide">
+                <img
                      src="media/slider/slider1.jpg"
                      />
             </div>
             <div class="swiper-slide">
                 <img
                      src="media/slider/slider2.jpg"
-                     />
-            </div>
-            <div class="swiper-slide">
-                <img
-                     src="https://user-images.githubusercontent.com/10026019/102327273-74284900-3fc0-11eb-913a-69661b73ab5d.png"
                      />
             </div>
             <div class="swiper-slide">
@@ -129,9 +429,51 @@
     </section>
     </div>
 
-    <!-- APP   -->
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/jquery.instagramFeed.min.js"></script>
+    <!-- Masonry Gallery -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.0/photoswipe.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.0/photoswipe-ui-default.min.js'></script>
+
+    <script>
+
+        (function($) {
+
+            // Init empty gallery array
+            var container = [];
+
+            // Loop over gallery items and push it to the array
+            $('#gallery').find('figure').each(function() {
+                var $link = $(this).find('a'),
+                    item = {
+                        src: $link.attr('href'),
+                        w: $link.data('width'),
+                        h: $link.data('height'),
+                        title: $link.data('caption')
+                    };
+                container.push(item);
+            });
+
+            // Define click event on gallery item
+            $('a').click(function(event) {
+
+                // Prevent location change
+                event.preventDefault();
+
+                // Define object and gallery options
+                var $pswp = $('.pswp')[0],
+                    options = {
+                        index: $(this).parent('figure').index(),
+                        bgOpacity: 0.85,
+                        showHideOpacity: true
+                    };
+
+                // Initialize PhotoSwipe
+                var gallery = new PhotoSwipe($pswp, PhotoSwipeUI_Default, container, options);
+                gallery.init();
+            });
+
+        }(jQuery));
+
+    </script>
 
     <!-- Tiny-Swiper JS -->
     <script src="https://unpkg.com/tiny-swiper@latest/lib/index.min.js"></script>
@@ -157,5 +499,6 @@
             plugins: [SwiperPluginNavigation, SwiperPluginKeyboardControl]
         });
     </script>
+
 </body>
 </html>
